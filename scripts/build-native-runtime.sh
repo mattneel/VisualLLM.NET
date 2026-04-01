@@ -49,9 +49,9 @@ cmake_args=(
     -DBUILD_SHARED_LIBS=ON
     -DLLAMA_BUILD_COMMON=ON
     -DLLAMA_BUILD_SERVER=ON
+    -DLLAMA_BUILD_TOOLS=ON
     -DLLAMA_BUILD_WEBUI=OFF
     -DLLAMA_BUILD_TESTS=OFF
-    -DLLAMA_BUILD_TOOLS=OFF
     -DLLAMA_BUILD_EXAMPLES=OFF
     -DLLAMA_OPENSSL=OFF
     -DGGML_BACKEND_DL=OFF
@@ -64,7 +64,7 @@ if command -v ninja >/dev/null 2>&1; then
 fi
 
 cmake "${cmake_args[@]}"
-cmake --build "${build_root}" --config "${configuration}" --parallel
+cmake --build "${build_root}" --config "${configuration}" --parallel --target llama llama-server
 
 if [[ -d "${build_root}/bin/${configuration}" ]]; then
     build_bin_directory="${build_root}/bin/${configuration}"

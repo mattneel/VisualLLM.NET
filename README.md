@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/visualllm-logo.png" alt="VisualLLM.NET Logo" width="200"/>
+  <img src="assets/visualllm-logo.jpg" alt="VisualLLM.NET Logo" width="420"/>
 </p>
 
 <h1 align="center">VisualLLM.NET</h1>
@@ -19,8 +19,6 @@
 ---
 
 **VisualLLM.NET** is an OpenAI-compatible inference server implemented in Visual Basic .NET, with an in-process native backend for GGUF-based local models.
-
-This sentence is now literal. The server loads `llama.cpp` directly through P/Invoke, stages native runtime bits under `runtimes/<rid>/native`, serves OpenAI-style chat completions, and streams tokens over SSE without delegating the actual work to a subprocess and calling it architecture.
 
 > *"We didn't ask whether we should. We asked whether we could. And then we wrote the loader."*
 
@@ -223,12 +221,9 @@ runtimes/<rid>/native/
   ggml*.dll | libggml*.so | libggml*.dylib
 ```
 
-This is the line where the repository stopped being a proxy-shaped joke and became a project with runtime ownership.
+This is the line where the repository stopped being a thin facade and became a project with runtime ownership.
 
 ## Frequently Asked Questions
-
-**Q: Is this still an April Fool's repository?**  
-A: Yes. Unfortunately, it now also has a native loader, release automation, and a smoke-tested packaged build.
 
 **Q: Does inference happen in-process?**  
 A: Yes. The managed server loads `llama.cpp` directly via P/Invoke and runs completion inside the VisualLLM.NET process.

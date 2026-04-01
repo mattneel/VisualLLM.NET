@@ -65,9 +65,9 @@ $configureArguments = @(
     "-DBUILD_SHARED_LIBS=ON",
     "-DLLAMA_BUILD_COMMON=ON",
     "-DLLAMA_BUILD_SERVER=ON",
+    "-DLLAMA_BUILD_TOOLS=ON",
     "-DLLAMA_BUILD_WEBUI=OFF",
     "-DLLAMA_BUILD_TESTS=OFF",
-    "-DLLAMA_BUILD_TOOLS=OFF",
     "-DLLAMA_BUILD_EXAMPLES=OFF",
     "-DLLAMA_OPENSSL=OFF",
     "-DGGML_BACKEND_DL=OFF",
@@ -90,7 +90,7 @@ if ($LASTEXITCODE -ne 0) {
     throw "CMake configure failed for runtime '$rid'."
 }
 
-& cmake --build $buildRoot --config $Configuration --parallel
+& cmake --build $buildRoot --config $Configuration --parallel --target llama llama-server
 if ($LASTEXITCODE -ne 0) {
     throw "CMake build failed for runtime '$rid'."
 }
