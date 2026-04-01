@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/VisualLLM.Inference/VisualLLM.Inference.vbproj" />
+    <Project Path="src/VisualLLM.Native/VisualLLM.Native.vbproj" />
+    <Project Path="src/VisualLLM.Server/VisualLLM.Server.vbproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/VisualLLM.Server.Tests/VisualLLM.Server.Tests.vbproj" />
+  </Folder>
+</Solution>

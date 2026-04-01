@@ -1,0 +1,82 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build-test-package:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            rid: win-x64
+          - os: ubuntu-24.04
+            rid: linux-x64
+          - os: macos-14
+            rid: osx-arm64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore managed solution
+        run: dotnet restore VisualLLM.NET.slnx
+
+      - name: Build managed solution
+        run: dotnet build VisualLLM.NET.slnx -c Release --no-restore
+
+      - name: Run managed tests
+        run: dotnet test VisualLLM.NET.slnx -c Release --no-build
+
+      - name: Build native runtime (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./scripts/build-native-runtime.ps1 -RuntimeIdentifier ${{ matrix.rid }}
+
+      - name: Build native runtime (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: bash ./scripts/build-native-runtime.sh ${{ matrix.rid }}
+
+      - name: Package release artifact (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./scripts/package-release.ps1 -RuntimeIdentifier ${{ matrix.rid }} -Version 0.1.0
+
+      - name: Package release artifact (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: VERSION=0.1.0 bash ./scripts/package-release.sh ${{ matrix.rid }}
+
+      - name: Run native smoke test (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./scripts/smoke-native-runtime.ps1 -RuntimeIdentifier ${{ matrix.rid }}
+
+      - name: Run native smoke test (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: bash ./scripts/smoke-native-runtime.sh ${{ matrix.rid }}
+
+      - name: Upload release layout artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: VisualLLM.NET-v0.1.0-${{ matrix.rid }}
+          path: artifacts/release/*
+          if-no-files-found: error
