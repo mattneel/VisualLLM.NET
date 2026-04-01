@@ -147,9 +147,14 @@ Namespace Hosting
         End Sub
 
         Private Shared Function GetProductVersion() As String
+            Dim informationalVersion = GetType(ServerBootstrapper).Assembly.GetCustomAttribute(Of AssemblyInformationalVersionAttribute)()
+            If informationalVersion IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(informationalVersion.InformationalVersion) Then
+                Return informationalVersion.InformationalVersion.Split("+"c)(0)
+            End If
+
             Dim assemblyVersion = GetType(ServerBootstrapper).Assembly.GetName().Version
             If assemblyVersion Is Nothing Then
-                Return "0.1.0"
+                Return "0.0.0"
             End If
 
             Return $"{assemblyVersion.Major}.{assemblyVersion.Minor}.{assemblyVersion.Build}"

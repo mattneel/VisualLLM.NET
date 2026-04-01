@@ -2,7 +2,7 @@
 set -euo pipefail
 
 runtime_identifier="${1:-}"
-version="${VERSION:-0.1.0}"
+version="${VERSION:-0.1.1}"
 configuration="${CONFIGURATION:-Release}"
 framework="${FRAMEWORK:-net10.0}"
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

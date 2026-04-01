@@ -1,6 +1,6 @@
 param(
     [string]$RuntimeIdentifier = "",
-    [string]$Version = "0.1.0",
+    [string]$Version = "0.1.1",
     [string]$Configuration = "Release",
     [string]$Framework = "net10.0",
     [string]$PublishDirectory = "",

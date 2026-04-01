@@ -26,7 +26,8 @@ VisualLLM.NET accepts pull requests from engineers with the composure to ship na
 
 - Managed publish output is produced by the packaging scripts.
 - Native libraries and the optional `llama-server` sidecar are staged into `runtimes/<rid>/native`.
-- GitHub Actions builds `v0.1.0` release artifacts on a cross-platform matrix so breakage has nowhere to hide.
+- GitHub Actions builds release artifacts on a cross-platform matrix so breakage has nowhere to hide.
+- Starting with `v0.1.1`, GitHub Actions also publishes `VisualLLM.Inference` to GitHub Packages.
 
 ## Pull Requests
 

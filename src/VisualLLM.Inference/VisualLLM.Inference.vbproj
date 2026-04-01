@@ -3,10 +3,20 @@
   <PropertyGroup>
     <RootNamespace>VisualLLM.Inference</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
+    <PackageId>VisualLLM.Inference</PackageId>
+    <Title>VisualLLM.Inference</Title>
+    <Description>OpenAI-compatible request and response contracts plus managed inference abstractions used by VisualLLM.NET.</Description>
+    <PackageTags>llm;openai;gguf;llama.cpp;visual-basic;vbnet</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <LangVersion>latest</LangVersion>
     <OptionExplicit>On</OptionExplicit>
     <OptionStrict>On</OptionStrict>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
 </Project>

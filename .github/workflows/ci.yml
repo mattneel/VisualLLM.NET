@@ -10,6 +10,32 @@ permissions:
   contents: read
 
 jobs:
+  pack-nuget:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore managed solution
+        run: dotnet restore VisualLLM.NET.slnx
+
+      - name: Pack VisualLLM.Inference
+        shell: bash
+        run: bash ./scripts/pack-nuget.sh
+
+      - name: Upload NuGet package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: VisualLLM.Inference-nuget
+          path: artifacts/nuget/*
+          if-no-files-found: error
+
   build-test-package:
     strategy:
       fail-fast: false
@@ -80,12 +106,12 @@ jobs:
       - name: Package release artifact (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
-        run: ./scripts/package-release.ps1 -RuntimeIdentifier ${{ matrix.rid }} -Version 0.1.0
+        run: ./scripts/package-release.ps1 -RuntimeIdentifier ${{ matrix.rid }} -Version 0.1.1
 
       - name: Package release artifact (Unix)
         if: runner.os != 'Windows'
         shell: bash
-        run: VERSION=0.1.0 bash ./scripts/package-release.sh ${{ matrix.rid }}
+        run: VERSION=0.1.1 bash ./scripts/package-release.sh ${{ matrix.rid }}
 
       - name: Run native smoke test (Windows)
         if: runner.os == 'Windows'
@@ -100,6 +126,6 @@ jobs:
       - name: Upload release layout artifact
         uses: actions/upload-artifact@v4
         with:
-          name: VisualLLM.NET-v0.1.0-${{ matrix.rid }}
+          name: VisualLLM.NET-v0.1.1-${{ matrix.rid }}
           path: artifacts/release/*
           if-no-files-found: error

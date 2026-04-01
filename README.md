@@ -123,7 +123,7 @@ If you prefer environment variables over arguments, the server supports both. If
 ## Build From Source
 
 ```bash
-git clone --recurse-submodules https://github.com/visualllm/VisualLLM.NET.git
+git clone --recurse-submodules https://github.com/mattneel/VisualLLM.NET.git
 cd VisualLLM.NET
 dotnet restore VisualLLM.NET.slnx
 dotnet build VisualLLM.NET.slnx -c Release
@@ -166,6 +166,17 @@ Each release archive does **not** contain:
 - Miscellaneous "it was already on PATH for me" assumptions.
 
 Each archive is accompanied by a sibling `.sha256` file. This is objectively the correct amount of supply-chain seriousness for a Visual Basic inference server.
+
+## NuGet Package
+
+Starting with `v0.1.1`, the managed `VisualLLM.Inference` library is published to GitHub Packages. It contains the OpenAI-compatible request and response models plus the inference abstractions used by the server. It does not contain model weights or native runtime binaries.
+
+```bash
+dotnet nuget add source --username mattneel --password YOUR_GITHUB_PAT --store-password-in-clear-text --name github "https://nuget.pkg.github.com/mattneel/index.json"
+dotnet add package VisualLLM.Inference --version 0.1.1 --source github
+```
+
+This is the correct amount of ceremony for importing Visual Basic inference contracts into a normal .NET application.
 
 ## Configuration
 
@@ -252,6 +263,7 @@ A: You are free to do that. We simply refuse to make it mandatory.
 ## Release Notes
 
 The inaugural release notes live at [docs/releases/v0.1.0.md](docs/releases/v0.1.0.md).
+The next release notes are already staged at [docs/releases/v0.1.1.md](docs/releases/v0.1.1.md), which is the kind of behavior normally associated with adults.
 
 ## Contributing
 

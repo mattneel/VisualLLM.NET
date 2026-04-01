@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>VisualLLM.Server</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>false</IsPackable>
     <LangVersion>latest</LangVersion>
     <OptionExplicit>On</OptionExplicit>
     <OptionStrict>On</OptionStrict>
